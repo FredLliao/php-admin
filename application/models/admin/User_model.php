@@ -7,7 +7,7 @@
  */
 
 include_once('Admin_base_model.php');
-class Account_model extends Admin_base_model {
+class User_model extends Admin_base_model {
 
     function __construct()
     {
@@ -19,7 +19,7 @@ class Account_model extends Admin_base_model {
         try {
             $or_where = array('LoginName' => $username, 'Mobile' => $username, 'EMail' => $username);
             $this->db->or_where($or_where);
-            $query = $this->db->get('accounts');
+            $query = $this->db->get('users');
             $row = $query->row();
             if(isset($row)) {
                 //最终密码算法：
@@ -41,11 +41,13 @@ class Account_model extends Admin_base_model {
                             }
 
                             //登录用户相关信息存入session
-                            $_SESSION[Const_string::SessionAccountIDKey] = $row->ID;
+                            $_SESSION[Const_string::SessionUserIDKey] = $row->ID;
+                            $_SESSION[Const_string::SessionUserNameKey] = $row->LoginName;
                             $_SESSION[Const_string::SessionRolesKey] = $roles;
                             $_SESSION[Const_string::SessionPermsKey] = $perms;
 
                             log_message('debug','用户[' . $username . ']的ID:' . $row->ID);
+                            log_message('debug','用户[' . $username . ']的LoginName:' . $row->LoginName);
                             log_message('debug','用户[' . $username . ']的角色roles:' . json_encode($roles));
                             log_message('debug','用户[' . $username . ']的权限perms:' . json_encode($perms));
 
@@ -55,7 +57,7 @@ class Account_model extends Admin_base_model {
                                 'LastLoginArea' => '',
                                 'LoginCount' => (++ $row->LoginCount));
                             $this->db->where('ID', $row->ID);
-                            $this->db->update('accounts', $set);
+                            $this->db->update('users', $set);
 
                             //login success
                             return true;

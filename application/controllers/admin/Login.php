@@ -19,11 +19,29 @@ class Login extends MY_Controller {
         $this->load->view('admin/config');
     }
 
+    /**
+     * 后台登录页面
+     */
     public function index()
     {
         $this->view('admin/login');
     }
 
+    /**
+     * 退出登录
+     */
+    public function logout()
+    {
+        log_message('debug', '退出登录！');
+        session_unset();
+        session_destroy();
+        log_message('debug', 'logout session_destroy: ' . json_encode($_SESSION));
+        redirect('admin/login');
+    }
+
+    /**
+     * ajax 登录接口
+     */
     public function ajax_login()
     {
         if ($this->isPost())
@@ -31,15 +49,13 @@ class Login extends MY_Controller {
             $username=$this->requestData["username"];
             $password=$this->requestData["password"];
             if(isset($username) && ! empty($username) && isset($password) && !empty($password)){
-                $this->load->model('admin/account_model', 'account_model');
+                $this->load->model('admin/user_model', 'user_model');
                 try {
-                    $result = $this->account_model->login($username,$password);
+                    $result = $this->user_model->login($username,$password);
                     if($result) {
                         log_message('debug','用户[' .$username. ']登录成功！');
-                        log_message('debug','$_SESSION:'.json_encode($_SESSION));
                         //login success
                         $this->json_success();
-                        $this->logout();
                     } else {
                         log_message('error','用户[' .$username. ']登录失败！');
                         $this->json_error('登录失败！服务器异常');
@@ -56,18 +72,6 @@ class Login extends MY_Controller {
             log_message('error','非法登录get请求');
             $this->json_error('非法请求!');
         }
-    }
-
-    public function logout()
-    {
-        log_message('debug', '退出登录！');
-        log_message('debug', 'session0:'.json_encode($_SESSION));
-//        session_start();
-        session_destroy();
-//        $this->session->sess_destroy();
-//        log_message('debug', 'session1:'.json_encode($_SESSION));
-        log_message('debug', 'session1:session_destroy');
-//        redirect('admin/login');
     }
 
 }

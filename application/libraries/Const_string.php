@@ -9,7 +9,8 @@
 class Const_string {
 
     //---------Session 相关key 常量------------
-    const SessionAccountIDKey="Session_AccountID";
+    const SessionUserIDKey="Session_UserID";
+    const SessionUserNameKey="Session_UserName";
     const SessionRolesKey="Session_Roles";
     const SessionPermsKey="Session_Perms";
 

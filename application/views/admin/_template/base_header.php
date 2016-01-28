@@ -46,7 +46,7 @@
                         </a>
                     </li>
                     <li>
-                        <a tabindex="-1" href="<?php  echo base_url('admin/login'); ?>">
+                        <a tabindex="-1" href="<?php  echo base_url('admin/login/logout'); ?>">
                             <i class="si si-logout pull-right"></i>Log out
                         </a>
                     </li>

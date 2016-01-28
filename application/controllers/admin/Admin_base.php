@@ -19,10 +19,14 @@ class Admin_base extends MY_Controller {
 
     public function __construct($_class = null)
     {
+        parent::__construct();
+
+        //检查是否登录
+        $this->_check_is_login();
+
         if(! empty($_class)) {
             $this->sub_class = strtolower($_class);
         }
-        parent::__construct();
 
         /**
          * 用户登录信息等可用 $this->load->vars 输出
@@ -81,6 +85,80 @@ class Admin_base extends MY_Controller {
                 $alias = substr($model, strlen($admin) + 1);
             }
             $this->load->model($model,$alias);
+        }
+    }
+
+    /**
+     * 检查是否登录
+     */
+    private function _check_is_login()
+    {
+        if(! $this->get_login_account_id() || ! $this->get_login_account_role() || ! $this->get_login_account_permission()) {
+            //来自http get/post 请求处理
+            if(isset($_SERVER['HTTP_X_REQUESTED_WITH']) && 'XMLHttpRequest' == $_SERVER['HTTP_X_REQUESTED_WITH']) {
+                log_message('debug', '未登录的http[' . $_SERVER['REQUEST_METHOD'] . ']请求！拒绝服务');
+                $this->json_error('需要登录才能操作');
+            } else {
+                log_message('debug', '未登录的请求！拒绝服务，并跳转到登录页面！');
+                redirect('admin/login');
+            }
+            exit;
+        }
+    }
+
+    /**
+     * 获取登录用户ID
+     *
+     * @return mixed
+     */
+    protected function get_login_account_id()
+    {
+        if(isset($_SESSION[Const_string::SessionUserIDKey])) {
+            return $_SESSION[Const_string::SessionUserIDKey];
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * 获取登录用户名
+     *
+     * @return mixed
+     */
+    protected function get_login_account_name()
+    {
+        if(isset($_SESSION[Const_string::SessionUserNameKey])) {
+            return $_SESSION[Const_string::SessionUserNameKey];
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * 获取登录用户角色数组
+     *
+     * @return mixed
+     */
+    protected function get_login_account_role()
+    {
+        if(isset($_SESSION[Const_string::SessionRolesKey])) {
+            return $_SESSION[Const_string::SessionRolesKey];
+        } else {
+            return null;
+        }
+    }
+
+    /**
+     * 获取登录用户权限数组
+     *
+     * @return mixed
+     */
+    protected function get_login_account_permission()
+    {
+        if(isset($_SESSION[Const_string::SessionPermsKey])) {
+            return $_SESSION[Const_string::SessionPermsKey];
+        } else {
+            return null;
         }
     }
 
