@@ -33,4 +33,4 @@ user_guide_src/cilexer/pycilexer.egg-info/*
 */cache/!index.html
 */cache/!.htaccess
 
-*/third_party/hulk_template/*
+*/third_party/hulk_template/views/*
