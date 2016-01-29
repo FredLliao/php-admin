@@ -20,7 +20,8 @@ class Welcome extends MY_Controller {
 	 */
 	public function index()
 	{
-		$this->view('parent_message');
+//		$this->view('parent_message');
+		$this->view('welcome_message');
 	}
 
 	public function test()
