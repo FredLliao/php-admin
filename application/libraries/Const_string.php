@@ -8,10 +8,12 @@
 
 class Const_string {
 
+    const Admin = 'admin';
+
     //---------Session 相关key 常量------------
-    const SessionUserIDKey="Session_UserID";
-    const SessionUserNameKey="Session_UserName";
-    const SessionRolesKey="Session_Roles";
-    const SessionPermsKey="Session_Perms";
+    const SessionUserIDKey = 'Session_UserID';
+    const SessionUserNameKey = 'Session_UserName';
+    const SessionRolesKey = 'Session_Roles';
+    const SessionPermsKey = 'Session_Perms';
 
 }

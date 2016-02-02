@@ -26,9 +26,9 @@ class Admin_base_model extends MY_Model {
      */
     protected function model($model, $alias = null)
     {
-        $admin = 'admin';
-        if(! String_utils::startWith($model, $admin)) {
-            $model = $admin. DIRECTORY_SEPARATOR . $model;
+        $prefix = Const_string::Admin;
+        if(! String_utils::startWith($model, $prefix)) {
+            $model = $prefix. DIRECTORY_SEPARATOR . $model;
             if(! isset($alias)) {
                 $this->CI->load->model($model);
             } else {
@@ -36,7 +36,7 @@ class Admin_base_model extends MY_Model {
             }
         } else {
             if(! isset($alias)) {
-                $alias = substr($model, strlen($admin) + 1);
+                $alias = substr($model, strlen($prefix) + 1);
             }
             $this->CI->load->model($model,$alias);
         }

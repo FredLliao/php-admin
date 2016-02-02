@@ -12,6 +12,9 @@ class Login extends MY_Controller {
     public function __construct()
     {
         parent::__construct();
+
+        $this->load->library('session');
+
         /**
          * 加载 admin/config 文件，该config里面做了$this->load->vars 输出config对象
          * update by liaosy 2016-01-19
@@ -32,10 +35,8 @@ class Login extends MY_Controller {
      */
     public function logout()
     {
-        log_message('debug', '退出登录！');
-        session_unset();
-        session_destroy();
-        log_message('debug', 'logout session_destroy: ' . json_encode($_SESSION));
+        $this->load->model('admin/user_model', 'user_model');
+        $this->user_model->logout();
         redirect('admin/login');
     }
 

@@ -9,7 +9,7 @@
 
 include_once('Admin_base.php');
 
-class Index extends Admin_base {
+class User extends Admin_base {
 
     public function __construct()
     {
@@ -18,7 +18,7 @@ class Index extends Admin_base {
 
     public function index()
     {
-        $this->view('index');
+
     }
 
 }

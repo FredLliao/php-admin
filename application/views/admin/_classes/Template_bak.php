@@ -16,7 +16,6 @@ class Template {
             $title              = '',
             $description        = '',
             $assets_folder      = '',
-            $base_path          = '',
             $body_bg            = '',
             $main_nav           = array(),
             $main_nav_active    = '',
@@ -92,12 +91,11 @@ class Template {
     /**
      * Class constructor
      */
-    public function __construct($name = '', $version = '', $assets_folder = '',$base_path = '') {
+    public function __construct($name = '', $version = '', $assets_folder = '') {
         // Set Template's name, version and assets folder2
         $this->name                 = $name;
         $this->version              = $version;
         $this->assets_folder        = $assets_folder;
-        $this->base_path            = $base_path;
     }
 
     /**
@@ -343,10 +341,5 @@ class Template {
         } else {
             return $label;
         }
-    }
-
-    protected function get_base_path($base_path)
-    {
-        return base_url() . $base_path ;
     }
 }

@@ -21,6 +21,7 @@ class Admin_base extends MY_Controller {
     {
         parent::__construct();
 
+        $this->load->library('session');
         //检查是否登录
         $this->_check_is_login();
 
@@ -37,7 +38,7 @@ class Admin_base extends MY_Controller {
          * 加载 admin/config 文件，该config里面做了$this->load->vars 输出config对象
          * update by liaosy 2016-01-19
          */
-        $this->load->view('admin/config');
+        $this->load->view(Const_string::Admin . '/config');
     }
 
     /**
@@ -50,12 +51,12 @@ class Admin_base extends MY_Controller {
      */
     protected function view($layout, $data = array(), $return = false)
     {
-        $admin = 'admin';
-        if(! String_utils::startWith($layout,$admin)) {
+        $prefix = Const_string::Admin;
+        if(! String_utils::startWith($layout,$prefix)) {
             if(empty($this->sub_class)) {
-                $layout = $admin. DIRECTORY_SEPARATOR . $layout;
+                $layout = $prefix. DIRECTORY_SEPARATOR . $layout;
             } else {
-                $layout = $admin. DIRECTORY_SEPARATOR  . $this->sub_class . DIRECTORY_SEPARATOR . $layout;
+                $layout = $prefix. DIRECTORY_SEPARATOR  . $this->sub_class . DIRECTORY_SEPARATOR . $layout;
             }
         }
         $data = array('data' => $data);
@@ -72,9 +73,9 @@ class Admin_base extends MY_Controller {
      */
     protected function model($model, $alias = null)
     {
-        $admin = 'admin';
-        if(! String_utils::startWith($model, $admin)) {
-            $model = $admin. DIRECTORY_SEPARATOR . $model;
+        $prefix = Const_string::Admin;
+        if(! String_utils::startWith($model, $prefix)) {
+            $model = $prefix. DIRECTORY_SEPARATOR . $model;
             if(! isset($alias)) {
                 $this->load->model($model);
             } else {
@@ -82,7 +83,7 @@ class Admin_base extends MY_Controller {
             }
         } else {
             if(! isset($alias)) {
-                $alias = substr($model, strlen($admin) + 1);
+                $alias = substr($model, strlen($prefix) + 1);
             }
             $this->load->model($model,$alias);
         }
@@ -100,7 +101,7 @@ class Admin_base extends MY_Controller {
                 $this->json_error('需要登录才能操作');
             } else {
                 log_message('debug', '未登录的请求！拒绝服务，并跳转到登录页面！');
-                redirect('admin/login');
+                admin_redirect('login');
             }
             exit;
         }
