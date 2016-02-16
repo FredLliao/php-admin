@@ -197,7 +197,6 @@ class Template {
             $link_type      = isset($node['type']) ? isset($node['type']) : '';
             $sub_active     = false;
             $link_active    = $link_url == $this->main_nav_active ? true : false;
-
             // If link type is a header
             if ($link_type == 'heading') {
                 $this->nav_html .= "<li class=\"nav-main-heading\">$link_name</li>\n";
@@ -213,6 +212,13 @@ class Template {
 
                 // Add the link
                 $this->nav_html .= "<li$li_prop>\n";
+
+                /**
+                 * 转化为绝对url路径
+                 * update by liaosy 2016-02-02
+                 */
+                $link_url = admin_url($link_url);
+
                 $this->nav_html .= "<a$link_prop href=\"$link_url\">$link_icon$link_name</a>\n";
 
                 // If it is a submenu, call the function again

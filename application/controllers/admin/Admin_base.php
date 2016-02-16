@@ -94,7 +94,8 @@ class Admin_base extends MY_Controller {
      */
     private function _check_is_login()
     {
-        if(! $this->get_login_account_id() || ! $this->get_login_account_role() || ! $this->get_login_account_permission()) {
+        log_message('info', '检查是否登录！');
+        if(! $this->get_login_user_id() || ! $this->get_login_user_role() || ! $this->get_login_user_permission()) {
             //来自http get/post 请求处理
             if(isset($_SERVER['HTTP_X_REQUESTED_WITH']) && 'XMLHttpRequest' == $_SERVER['HTTP_X_REQUESTED_WITH']) {
                 log_message('debug', '未登录的http[' . $_SERVER['REQUEST_METHOD'] . ']请求！拒绝服务');
@@ -112,7 +113,7 @@ class Admin_base extends MY_Controller {
      *
      * @return mixed
      */
-    protected function get_login_account_id()
+    protected function get_login_user_id()
     {
         if(isset($_SESSION[Const_string::SessionUserIDKey])) {
             return $_SESSION[Const_string::SessionUserIDKey];
@@ -126,7 +127,7 @@ class Admin_base extends MY_Controller {
      *
      * @return mixed
      */
-    protected function get_login_account_name()
+    protected function get_login_user_name()
     {
         if(isset($_SESSION[Const_string::SessionUserNameKey])) {
             return $_SESSION[Const_string::SessionUserNameKey];
@@ -140,7 +141,7 @@ class Admin_base extends MY_Controller {
      *
      * @return mixed
      */
-    protected function get_login_account_role()
+    protected function get_login_user_role()
     {
         if(isset($_SESSION[Const_string::SessionRolesKey])) {
             return $_SESSION[Const_string::SessionRolesKey];
@@ -154,7 +155,7 @@ class Admin_base extends MY_Controller {
      *
      * @return mixed
      */
-    protected function get_login_account_permission()
+    protected function get_login_user_permission()
     {
         if(isset($_SESSION[Const_string::SessionPermsKey])) {
             return $_SESSION[Const_string::SessionPermsKey];

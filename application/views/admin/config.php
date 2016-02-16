@@ -53,14 +53,18 @@ $one->l_side_overlay_visible       = false;    // True: Visible Side Overlay, Fa
 $one->l_side_scroll                = true;     // True: Enable custom scrolling (> 991px), False: Disable it (native scrolling)
 
 // Global Active Page (it will get compared with the url of each menu link to make the link active and set up main menu accordingly)
-$one->main_nav_active              = basename($_SERVER['PHP_SELF']);
+/**
+ * 控制菜单是否 active
+ * update by liaosy 2016-02-02
+ */
+$one->main_nav_active              = basename($_SERVER['PHP_SELF']) != 'admin' ? basename($_SERVER['PHP_SELF']) : '';
 
 // Global Main Menu
 $one->main_nav                     = array(
     array(
         'name'  => '<span class="sidebar-mini-hide">Dashboard</span>',
         'icon'  => 'si si-speedometer',
-        'url'   => admin_url()
+        'url'   => ''
     )
 );
 
@@ -72,11 +76,11 @@ if(check_user_permission('article')) {
         'sub'   => array(
             array(
                 'name'  => '文章列表',
-                'url'   => admin_url()
+                'url'   => 'article'
             ),
             array(
                 'name'  => '新建文章',
-                'url'   => admin_url()
+                'url'   => 'article/create'
             )
         )
     );
@@ -90,11 +94,11 @@ if(check_user_permission('analysis')) {
         'sub'   => array(
             array(
                 'name'  => '日活',
-                'url'   => admin_url()
+                'url'   => 'adu'
             ),
             array(
                 'name'  => '留存率',
-                'url'   => admin_url()
+                'url'   => 'retention'
             )
         )
     );
@@ -112,15 +116,15 @@ if(check_user_permission('user')) {
         'sub'   => array(
             array(
                 'name'  => '用户管理',
-                'url'   => admin_url()
+                'url'   => 'user'
             ),
             array(
                 'name'  => '角色管理',
-                'url'   => admin_url()
+                'url'   => 'role'
             ),
             array(
                 'name'  => '权限管理',
-                'url'   => admin_url()
+                'url'   => 'perm'
             )
         )
     );

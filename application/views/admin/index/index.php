@@ -23,7 +23,7 @@
 <# block page_js_code #>
     <script>
         $(function(){
-            console.log('hello world');
+
         });
     </script>
 <# /block #>
