@@ -1,2 +1,1 @@
-基于codeigniter + OneUI 框架搭建的一个后台内容管理系统框架 
-by liaosy
+基于codeigniter + OneUI 框架搭建的一个后台内容管理系统框架 by liaosy
