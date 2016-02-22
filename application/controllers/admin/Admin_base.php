@@ -22,6 +22,7 @@ class Admin_base extends MY_Controller {
         parent::__construct();
 
         $this->load->library('session');
+        $this->load->helper('pagination');
         //检查是否登录
         $this->_check_is_login();
 

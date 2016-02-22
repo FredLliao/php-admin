@@ -1,5 +1,5 @@
 <?php /* HULK template engine v0.1
-a:2:{s:17:"admin/index/index";i:1454402091;s:22:"admin/_layouts/default";i:1453351231;}
+a:2:{s:17:"admin/index/index";i:1455786287;s:22:"admin/_layouts/default";i:1453351231;}
 */ ?>
 <?php $this->load->view('admin/_template/template_head_start') ; ?>
     <!-- Page CSS Plugins -->
