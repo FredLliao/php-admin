@@ -7,6 +7,13 @@
  */
 
 /**
+ * 分页方法
+ * 需要传递$options数组参数：例如
+ *  $options['base_url'] = admin_url('user/index');
+    $options['total_rows'] = 50;
+    $options['per_page'] = 20;
+    $options['url_args'] = $url_args;
+ *
  * @param $options
  */
 function pagination($options)
@@ -20,8 +27,8 @@ function pagination($options)
     $config['per_page'] = $options['per_page'] ? $options['per_page'] : 20;
     //设置带参数的翻页
     $config['suffix'] = '';
-    if(isset($options['search'])) {
-        $config['suffix'] = '/' . $CI->uri->assoc_to_uri($options['search']);
+    if(isset($options['url_args'])) {
+        $config['suffix'] = '/' . $CI->uri->assoc_to_uri($options['url_args']);
     }
     //设置first_url 地址
     $config['first_url'] = $config['base_url'] . '/1' . $config['suffix'] ;

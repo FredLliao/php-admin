@@ -25,7 +25,7 @@ class User extends Admin_base {
                 $select_where["Visible"]=intval($visible);
             }
         }
-        $search["visible"]=$visible;
+        $url_args["visible"]=$visible;
 
         $title="test";
         if(isset($_GET["title"])&&!empty($_GET["title"])){
@@ -33,7 +33,7 @@ class User extends Admin_base {
             //模糊匹配
             $select_where['Title']= $title;
         }
-        $search["title"]=$title;
+        $url_args["title"]=$title;
 
         $this->load->database();
         $this->db->from('users');
@@ -46,7 +46,7 @@ class User extends Admin_base {
         $options['base_url'] = admin_url('user/index');
         $options['total_rows'] = 50;
         $options['per_page'] = 5;
-        $options['search'] = $search;
+        $options['url_args'] = $url_args;
         pagination($options);
 
         $this->view('index', $rows);
